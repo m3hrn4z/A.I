@@ -125,21 +125,19 @@ def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
     Priority = util.PriorityQueue()
-    visited = []
     Priority.push((problem.getStartState(), []), 0)
-    visited.append(problem.getStartState())
+    visited = []
     while not Priority.isEmpty():
-        (node, path) = Priority.pop()
-    if problem.isGoalState(node):
-        return path
-    if node not in visited:
-        visited.append(node)
+        node, path = Priority.pop()
+        if not node in visited:
+            visited.append(node)
+            if problem.isGoalState(node):
+                return path
+            for successors in problem.getSuccessors(node):
+                nState, nDirection = successors[0], successors[1]
+                Priority.push((nState, path + [nDirection]), problem.getCostOfActions(path + [nDirection])) # cost = problem.getCostOfActions(path + [nDirection])
+    return []
 
-    for (successors) in problem.getSuccessors(node):
-        nState, nDirection = successors[0], successors[1]
-        if nState not in visited:
-            Priority.update((nState, path + [nDirection]), problem.getCostOfActions(path + [nDirection]))
-    util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
     """
