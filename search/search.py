@@ -159,11 +159,10 @@ def aStarSearch(problem, heuristic=nullHeuristic):
             visited.append(node[0])
             if problem.isGoalState(node[0]):
                 return node[1]
-            for n in problem.getSuccessors(node[0]):
-                path = node[1] + [n[1]]
-                cost = problem.getCostOfActions(path) + heuristic(n[0], problem)
-                Astar.push((n[0], path), cost)
-    return
+            for successors in problem.getSuccessors(node[0]):
+                cost = problem.getCostOfActions(node[1] + [successors[1]]) + heuristic(successors[0], problem) #  path = node[1] + [successors[1]]
+                Astar.push((successors[0], node[1] + [successors[1]]), cost)
+    return []
 
 # Abbreviations
 bfs = breadthFirstSearch
