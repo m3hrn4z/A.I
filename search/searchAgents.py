@@ -388,7 +388,24 @@ def cornersHeuristic(state, problem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
-    return 0 # Default to trivial solution
+    """
+       Heuristic = Manhattan distance to the furthest unvisited corner
+       """
+    corners_tuple = state[1]
+    corners_list = list(corners_tuple)  # Obtain all the unvisted corners
+    distance_to_farthest_corner = -1  # Initializa distance to -1
+    farthest_corner = ()
+    for corner in corners_list:
+        if (distance_to_farthest_corner == -1) or (distance_to_farthest_corner < util.manhattanDistance(corner, state[
+            0])):  # Update farthest corner and distance
+            farthest_corner = tuple(corner)
+            distance_to_farthest_corner = util.manhattanDistance(farthest_corner, state[0])
+
+    if len(farthest_corner) == 0:
+        return 0 # Default to trivial solution
+
+    return distance_to_farthest_corner  # Return the farthest distance
+
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
