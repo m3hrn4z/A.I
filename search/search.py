@@ -155,7 +155,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     visited = []
     while not Astar.isEmpty():
         node = Astar.pop()
-        if not node[0] in visited:
+        if node[0] not in visited:
             visited.append(node[0])
             if problem.isGoalState(node[0]):
                 return node[1]
