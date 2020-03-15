@@ -388,23 +388,20 @@ def cornersHeuristic(state, problem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
-    """
-       Heuristic = Manhattan distance to the furthest unvisited corner
-       """
-    corners_tuple = state[1]
-    corners_list = list(corners_tuple)  # Obtain all the unvisted corners
-    distance_to_farthest_corner = -1  # Initializa distance to -1
-    farthest_corner = ()
-    for corner in corners_list:
-        if (distance_to_farthest_corner == -1) or (distance_to_farthest_corner < util.manhattanDistance(corner, state[
-            0])):  # Update farthest corner and distance
-            farthest_corner = tuple(corner)
-            distance_to_farthest_corner = util.manhattanDistance(farthest_corner, state[0])
+ # Calculate Manhattan distance to furthest node
 
-    if len(farthest_corner) == 0:
-        return 0 # Default to trivial solution
+    allCorners = list(state[1])  # list of corners not visited
+    longestPath = -1
+    corner = ()
+    for c in allCorners:
+        if (longestPath == -1) or (longestPath < util.manhattanDistance(c, state[0])):
+            corner = tuple(c)
+            longestPath = util.manhattanDistance(corner, state[0])
 
-    return distance_to_farthest_corner  # Return the farthest distance
+    if len(corner) == 0:
+        return 0  # Default to trivial solution
+
+    return longestPath  # distance
 
 
 class AStarCornersAgent(SearchAgent):
